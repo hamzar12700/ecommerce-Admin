@@ -4,7 +4,7 @@ import { backendURL } from "../App";
 import { toast } from "react-toastify";
 const List = ({ token }) => {
   const [list, setList] = useState([]);
-  console.log(token);
+  // console.log(token);
 
   const fetchData = async () => {
     if (!token) {
@@ -16,6 +16,7 @@ const List = ({ token }) => {
       const response = await axios.get(`${backendURL}/api/product/list`, {
         headers: { token },
       });
+      // console.log(token);
 
       if (response.data.success) {
         setList(response.data.product);
@@ -23,6 +24,8 @@ const List = ({ token }) => {
         toast.error(response.data.message);
       }
     } catch (error) {
+      console.log(error.message);
+      
       toast.error(error.response?.data?.message || error.message);
     }
   };
@@ -33,27 +36,33 @@ const List = ({ token }) => {
 
 const removeItem = async (id) => {
   try {
+    console.log("Deleting ID:", id);
+    console.log("Token:", token);
+
     const response = await axios.post(
       `${backendURL}/api/product/remove`,
-      { id },
+      { productId: id }, 
       {
         headers: {
-          token: token,
-        },
+          token: token 
+        }
       }
     );
 
+    console.log("Delete Response:", response.data);
+
     if (response.data.success) {
-      toast.success(response.data.message);
+      toast.success("Item deleted");
       fetchData();
     } else {
-      toast.error(response.data.message);
+      toast.error(response.data.message || "Failed to delete");
     }
   } catch (error) {
-    toast.error(error.response?.data?.message || error.message);
-    console.log("Error:", error.response);
+    console.log("❌ Delete Error:", error.response?.data || error.message);
+    toast.error(error.response?.data?.message || "Error deleting");
   }
 };
+
 
 
 

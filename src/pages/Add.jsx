@@ -28,7 +28,7 @@ const Add = ({ token }) => {
       fromData.append("subCategory", subCategory);
       fromData.append("price", price);
       fromData.append("sizes", JSON.stringify(sizes));
-      fromData.append("BestSeller", bestSeller);
+      fromData.append("bestSeller", bestSeller);
 
       image1 && fromData.append("image1", image1);
       image2 && fromData.append("image2", image2);
@@ -271,7 +271,7 @@ const Add = ({ token }) => {
 
       <div className="flex gap-2 mt-2">
         <input
-          onChange={(e) => setBestSeller((prev) => !prev)}
+          onChange={() => setBestSeller((prev) => !prev)}
           checked={bestSeller}
           type="checkbox"
           id="bestSeller"

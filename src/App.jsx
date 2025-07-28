@@ -15,6 +15,7 @@ function App() {
   const [token, setToken] = useState(
     localStorage.getItem("token") ? localStorage.getItem("token") : ""
   );
+// console.log(token);
 
   useEffect(() => {
     localStorage.setItem("token", token);
@@ -35,7 +36,7 @@ function App() {
               <Routes>
                 <Route path="/add" element={<Add token={token} />} />
                 <Route path="/list" element={<List token={token} />} />
-                <Route path="/orders" element={<Order setToken={setToken} />} />
+                <Route path="/orders" element={<Order token={token} />} />
               </Routes>
             </div>
           </div>
